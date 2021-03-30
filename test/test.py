@@ -47,6 +47,7 @@ on = True
 points = 0
 lives = 3
 on = True
+testv = random.randrange(1, 9)
 
 def player():
 	pygame.draw.rect(Display, red, (x, y, width, height))
@@ -78,22 +79,27 @@ def movement():
 			jumpCount = 10
 			jump = False
 def test():
-	testv = random.randrange(1, 3)
-	if testv == 1:
+	global testv, OBx, OB2x, OB3x
+	if testv >= 1 and testv <= 3:
+		OBx -= 30
 		Object()
 		ObjectCollision()
-	if testv == 2:
+	if testv >= 4 and testv <= 6:
+		OB2x -= 30
 		Object2()
 		Object2Collision()
-	if testv == 3:
+	if testv >= 7 and testv <= 9:
+		OB3x -= 30
 		Object3()
 		Object3Collision()
 
 def ObjectCollision():
-	global OBx, OBy, DisplayH, DisplayW, x, y
+	global OBx, OBy, DisplayH, DisplayW, x, y, testv
 	if OBx < 30:
 		OBx = displayW - 70
 		OBy = displayH - 80
+		testv = random.randrange(1, 9)
+		print('1')
 		
 	if x > OBx and x < OBx + 40 and y > OBy and y < OBy + 40:
 		hit()
@@ -108,10 +114,12 @@ def ObjectCollision():
 		hit()
 
 def Object2Collision():
-	global OB2x, OB2y, DisplayH, DisplayW, x, y
+	global OB2x, OB2y, DisplayH, DisplayW, x, y, testv
 	if OB2x < 30:
 		OB2x = displayW - 70
 		OB2y = displayH - 150
+		testv = random.randrange(1, 9)
+		print('2')
 		
 	if x > OB2x and x < OB2x + 40 and y > OB2y and y < OB2y + 40:
 		hit()
@@ -126,10 +134,12 @@ def Object2Collision():
 		hit()
 
 def Object3Collision():
-	global OB3x, OB3y, DisplayH, DisplayW, x, y
+	global OB3x, OB3y, DisplayH, DisplayW, x, y, testv
 	if OB3x < 30:
 		OB3x = displayW - 70
 		OB3y = displayH - 220
+		testv = random.randrange(1, 9)
+		print('3')
 		
 	if x > OB3x and x < OB3x + 40 and y > OB3y and y < OB3y + 40:
 		hit()
@@ -169,9 +179,6 @@ def game():
 	global on, points, OBx, OB2x, OB3x
 	on = True
 	while on:
-		OBx -= 10
-		OB2x -= 10
-		OB3x -= 10
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				on = False
