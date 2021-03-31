@@ -20,27 +20,27 @@ red = (255, 1, 1)
 blue = (1, 1, 255)
 
 x = (displayW/10)
-y = (displayH - 80)
-width = 50
-height = 50
+y = (displayH - 155)
+width = 125
+height = 125
 speed = 10
 jump = False
 jumpCount = 10
 
 OBx = displayW - 70
-OBy = displayH - 80
-OBw = 40
-OBh = 40
+OBy = displayH - 130
+OBw = 80
+OBh = 80
 
 OB2x = displayW - 70
-OB2y = displayH - 150
-OB2w = 40
-OB2h = 40
+OB2y = displayH - 230
+OB2w = 80
+OB2h = 80
 
 OB3x = displayW - 70
-OB3y = displayH - 220
-OB3w = 40
-OB3h = 40
+OB3y = displayH - 330
+OB3w = 80
+OB3h = 80
 
 on = True
 
@@ -64,32 +64,32 @@ def Object3():
 def movement():
 	global x, y, speed, width, jump, jumpCount
 	movement = pygame.key.get_pressed()
-	if movement[pygame.K_a] and x > speed + 25:
+	if movement[pygame.K_a] or movement[pygame.K_LEFT] and x > speed + 25:
 		x -= speed
-	elif movement[pygame.K_d] and x < displayW - 25 - speed - width:
+	elif movement[pygame.K_d]or movement[pygame.K_RIGHT] and x < displayW - 25 - speed - width:
 		x += speed
 	if not(jump):
-		if movement[pygame.K_w]:
+		if movement[pygame.K_w]or movement[pygame.K_UP]:
 			jump = True;
 	else:
 		if jumpCount >= -10:
-			y -= (jumpCount * abs(jumpCount)) * .5
-			jumpCount -= 1
+			y -= (jumpCount * abs(jumpCount)) * .4
+			jumpCount -= .5
 		else:
 			jumpCount = 10
 			jump = False
 def test():
 	global testv, OBx, OB2x, OB3x
 	if testv >= 1 and testv <= 3:
-		OBx -= 30
+		OBx -= 20
 		Object()
 		ObjectCollision()
 	if testv >= 4 and testv <= 6:
-		OB2x -= 30
+		OB2x -= 20
 		Object2()
 		Object2Collision()
 	if testv >= 7 and testv <= 9:
-		OB3x -= 30
+		OB3x -= 20
 		Object3()
 		Object3Collision()
 
@@ -97,60 +97,30 @@ def ObjectCollision():
 	global OBx, OBy, DisplayH, DisplayW, x, y, testv
 	if OBx < 30:
 		OBx = displayW - 70
-		OBy = displayH - 80
+		OBy = displayH - 130
 		testv = random.randrange(1, 9)
 		print('1')
-		
-	if x > OBx and x < OBx + 40 and y > OBy and y < OBy + 40:
-		hit()
-
-	elif x > OBx and x < OBx and y + OBy > displayH/2 and y + 55 < OBy + 40:
-		hit()
-		
-	elif x + 55> OBx and x < OBx + 40 and y > OBy and y < OBy + 40:
-		hit()
-
-	elif x + 55> OBx and x < OBx + 40 and y + 55 > OBy and y < OBy + 40:
+	if x + 95 > OBx and x < OBx + 80 and y + 95 > OBy and y < OBy + 80:
 		hit()
 
 def Object2Collision():
 	global OB2x, OB2y, DisplayH, DisplayW, x, y, testv
 	if OB2x < 30:
 		OB2x = displayW - 70
-		OB2y = displayH - 150
+		OB2y = displayH - 230
 		testv = random.randrange(1, 9)
 		print('2')
-		
-	if x > OB2x and x < OB2x + 40 and y > OB2y and y < OB2y + 40:
-		hit()
-
-	elif x > OB2x and x < OB2x and y + OB2y > displayH/2 and y + 55 < OB2y + 40:
-		hit()
-		
-	elif x + 55> OB2x and x < OB2x + 40 and y > OB2y and y < OB2y + 40:
-		hit()
-
-	elif x + 55> OB2x and x < OB2x + 40 and y + 55 > OB2y and y < OB2y + 40:
+	if x + 95 > OB2x and x < OB2x + 80 and y + 95 > OB2y and y < OB2y + 80:
 		hit()
 
 def Object3Collision():
 	global OB3x, OB3y, DisplayH, DisplayW, x, y, testv
 	if OB3x < 30:
 		OB3x = displayW - 70
-		OB3y = displayH - 220
+		OB3y = displayH - 330
 		testv = random.randrange(1, 9)
 		print('3')
-		
-	if x > OB3x and x < OB3x + 40 and y > OB3y and y < OB3y + 40:
-		hit()
-
-	elif x > OB3x and x < OB3x and y + OB3y > displayH/2 and y + 55 < OB3y + 40:
-		hit()
-		
-	elif x + 55> OB3x and x < OB3x + 40 and y > OB3y and y < OB3y + 40:
-		hit()
-
-	elif x + 55> OB3x and x < OB3x + 40 and y + 55 > OB3y and y < OB3y + 40:
+	if x + 95 > OB3x and x < OB3x + 80 and y < OB3y + 80 and y + 120 > OB3y:
 		hit()
 
 def Boundarybox():
@@ -174,6 +144,7 @@ def hit():
 	clock.tick(15)
 	time.sleep(2)
 	on = False
+	print('lost')
 
 def game():
 	global on, points, OBx, OB2x, OB3x
